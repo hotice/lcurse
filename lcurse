@@ -170,7 +170,7 @@ class WoWCurseWindow(QtGui.QWidget):
 
     def createAddonsFileFromWowAddonsFolder(self):
         global addons
-        parent = os.path.expanduser("~/{}/drive_c/{}/Interface/addons".format(prefix, wowinstalldir))
+        parent = os.path.expanduser("~/{}/drive_c/{}/Interface/AddOns".format(prefix, wowinstalldir))
         contents = os.listdir(parent)
         for item in contents:
             if isdir("{}/{}".format(parent, item)) and not item.lower().startswith("blizzard_"):
