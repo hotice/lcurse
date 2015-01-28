@@ -135,7 +135,7 @@ class WoWCurseWindow(QtGui.QWidget):
         add = QtGui.QPushButton(u'Add a new addon')
         self.connect(add, QtCore.SIGNAL('clicked()'), self.getNewAddon)
         
-        update = QtGui.QPushButton('Update addons')
+        update = QtGui.QPushButton('Install/Update addons')
         self.connect(update, QtCore.SIGNAL('clicked()'), self.updateAddons)
         
         start = QtGui.QPushButton('Start game')
