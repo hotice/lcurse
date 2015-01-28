@@ -129,16 +129,16 @@ class WoWCurseWindow(QtGui.QWidget):
         size = self.geometry()
         self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
         
-        settings = QtGui.QPushButton('Einstellungen')
+        settings = QtGui.QPushButton('Settings')
         self.connect(settings, QtCore.SIGNAL('clicked()'), settings_widget.show)
         
-        add = QtGui.QPushButton(u'Neues Addon hinzufügen')
+        add = QtGui.QPushButton(u'Add a new addon')
         self.connect(add, QtCore.SIGNAL('clicked()'), self.getNewAddon)
         
-        update = QtGui.QPushButton('Addons aktualisieren')
+        update = QtGui.QPushButton('Update addons')
         self.connect(update, QtCore.SIGNAL('clicked()'), self.updateAddons)
         
-        start = QtGui.QPushButton('Start')
+        start = QtGui.QPushButton('Start game')
         self.connect(start, QtCore.SIGNAL('clicked()'), self.startWoW)
         
         self.table = QtGui.QTableWidget()
@@ -236,10 +236,10 @@ class WoWCurseWindow(QtGui.QWidget):
     def handleFinished(self):
         print "Handle Finish called"
         if len(self.updated) == 0:
-            message = 'Alle Addons sind aktuell'
+            message = 'All addons are up to date'
         else:
             self.writeAddonsFile()
-            message = 'Folgende Addons wurden aktualisiert:'
+            message = 'The following addons have been updated:'
             for element in self.updated:
                 message = message + '\n' + element
         n = pynotify.Notification('Curse Updater', str(message))
@@ -280,7 +280,7 @@ class SettingsWindow(QtGui.QWidget):
         QtGui.QWidget.__init__(self, parent)
         
         self.resize(400, 300)
-        self.setWindowTitle('Einstellungen')
+        self.setWindowTitle('Settings')
         self.setWindowIcon(QtGui.QIcon(windowIcon))
         
         screen = QtGui.QDesktopWidget().screenGeometry()
@@ -288,7 +288,7 @@ class SettingsWindow(QtGui.QWidget):
         self.move((screen.width()-size.width())/2, (screen.height()-size.height())/2)
         
         bumblebox = QtGui.QComboBox()
-        bumblebox.addItems(['Nein, kein Optimus', 'Ja, Primus-Backend', 'Ja, Bumblebee-Backend'])
+        bumblebox.addItems(['No Optimus', 'Yes, Primus-Backend', 'Yes, Bumblebee-Backend'])
         self.connect(bumblebox, QtCore.SIGNAL('activated(QString)'), self.bumble_chosen)
         dictionary = {'none': 0, 'primus': 1, 'bumblebee': 2}
         bumblebox.setCurrentIndex(dictionary[bumblebee])
@@ -304,7 +304,7 @@ class SettingsWindow(QtGui.QWidget):
         wowinstalldir_edit = QtGui.QLineEdit(wowinstalldir)
         wowinstalldir_edit.textChanged[str].connect(self.wowinstalldir_change)
         
-        winecfg_prefix = QtGui.QPushButton(u'Winecfg für das Präfix aufrufen')
+        winecfg_prefix = QtGui.QPushButton(u'Open winecfg')
         self.connect(winecfg_prefix, QtCore.SIGNAL('clicked()'), self.winecfg)
         
         prefix_hbox = QtGui.QHBoxLayout()
@@ -317,20 +317,20 @@ class SettingsWindow(QtGui.QWidget):
 
         vbox = QtGui.QVBoxLayout()
         
-        vbox.addWidget(QtGui.QLabel(u'Präfix:'))
+        vbox.addWidget(QtGui.QLabel(u'Prefix:'))
         vbox.addLayout(prefix_hbox)
         vbox.addWidget(winecfg_prefix)
         vbox.addWidget(QtGui.QLabel(u'Wow Install Directory in wine:'))
         vbox.addLayout(wowinstalldir_hbox)
         vbox.addWidget(QtGui.QLabel('Optimus:'))
         vbox.addWidget(bumblebox)
-        vbox.addWidget(QtGui.QLabel('Architektur:'))
+        vbox.addWidget(QtGui.QLabel('Architecture:'))
         vbox.addWidget(bitbox)
         
         self.setLayout(vbox)
 
     def bumble_chosen(self, value):
-        dictionary = {'Nein, kein Optimus': 'none', 'Ja, Primus-Backend': 'primus', 'Ja, Bumblebee-Backend': 'bumblebee'}
+        dictionary = {'No Optimus': 'none', 'Yes, Primus-Backend': 'primus', 'Yes, Bumblebee-Backend': 'bumblebee'}
         bumblebee = dictionary[str(value)]
         
         config.set('Settings', 'Bumblebee', bumblebee)
